@@ -11,7 +11,7 @@ app.secret_key = 'random secret'
 oauth = OAuth(app)
 google = oauth.register(
     name='google',
-    client_id='674920413266-cf3ta4172t2g6epapjc60co5179j12gg.apps.googleusercontent.com',
+    client_id='xxxxxxxxxxxxxx',
     client_secret='_aEzVHICmhsvYFN9F9LOo4L1',
     access_token_url='https://accounts.google.com/o/oauth2/token',
     access_token_params=None,
@@ -42,14 +42,14 @@ def authorize():
 
 @app.route('/auth_complete')
 def auth_complete(google):
-    url_api = 'https://www.googleapis.com/books/v1/mylibrary/bookshelves?key=AIzaSyCI-44UQjQ1ppM_fOM4m-rJkeqbCbwDS0w'
+    url_api = 'xxxxxxxxxxxxxxxxxxx'
     res_data = google.get(url = url_api)
     data = res_data.json()
 
     volum_count,idx,dfx = [],[],[]
 
     ##Input bookshelf name that you plan to export the data
-    tit_bookshelf = ['My Google eBooks','To read','KUNTUL']
+    tit_bookshelf = ['My Google eBooks','To read']
     
     for tit_book in range (len(data['items'])):
         for x in tit_bookshelf:
@@ -153,77 +153,3 @@ def error():
 
 if __name__ == "__main__":
     app.run()
-    
-##import requests
-##import pandas as pd
-##
-####https://www.googleapis.com/books/v1/users/106317554425208272757/bookshelves/1001/volumes?key=AIzaSyCI-44UQjQ1ppM_fOM4m-rJkeqbCbwDS0w
-##list_author,list_title,list_date,list_page = [],[],[],[]
-##
-##URL = 'https://www.googleapis.com/books/v1/users/106317554425208272757/bookshelves/1001?key=AIzaSyCI-44UQjQ1ppM_fOM4m-rJkeqbCbwDS0w'
-##r = requests.get(url = URL)
-##data = r.json()
-##
-##loop = data['volumeCount']/40
-##
-##start = 0
-##max_api =  40
-##max_dat = 40 #(max=40)
-##
-##for d in range (int(loop)+1):
-##    check_url = 'https://www.googleapis.com/books/v1/users/106317554425208272757/bookshelves/1001/volumes?key=AIzaSyCI-44UQjQ1ppM_fOM4m-rJkeqbCbwDS0w&startIndex='+str(start)+'&maxResults='+str(max_dat)
-##    check_r = requests.get(url = check_url)
-##    check_data = check_r.json()
-##
-##    if data['volumeCount'] > max_dat:
-##        max_dat = max_dat
-##    else:
-##        max_dat = data['volumeCount']
-##        
-##    for x in range (max_dat):
-##        try:
-##            author = check_data['items'][x]['volumeInfo']['authors']
-##        except:
-##            author = ['NO DATA']
-##
-##        try:
-##            title = check_data['items'][x]['volumeInfo']['title']
-##        except:
-##            title = 'NO DATA'
-##
-##        try:
-##            date = check_data['items'][x]['volumeInfo']['publishedDate']
-##        except:
-##            date = 'NO DATA'
-##
-##        try:
-##            page = check_data['items'][x]['volumeInfo']['pageCount']
-##        except:
-##            page = 'NO DATA'
-##
-##        if author == '':
-##            author = ['NO DATA']
-##        if title == '':
-##            title = 'NO DATA'
-##        if date == '':
-##            date = 'NO DATA'
-##        if page == '':
-##            page == 'NO DATA'
-##
-##        list_author.append(','.join(author))
-##        list_title.append(title)
-##        list_date.append(date)
-##        list_page.append(page)
-##
-##        print('Title: '+title)
-##        print('Author: '+','.join(author))
-##        print('Date: ' + date)
-##        print('Page: ' +str(page))
-##        print('\n')
-##
-##    start = start+40
-##    data['volumeCount'] = data['volumeCount'] - 40
-##
-##data_excel = {'Title': list_title, 'Author':list_author, 'Date':list_date, 'Page':list_page}
-##df = pd.DataFrame(data_excel, columns=['Title','Author','Date','Page'])
-##df.to_excel ('export_dataframe.xlsx', index = False, header=True)
